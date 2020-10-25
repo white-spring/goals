@@ -1,0 +1,62 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.0.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+}
+
+ext {
+	jarName = project.name
+	mainClassName = 'com.sn.noia.NoiaApplication'
+}
+
+group = 'com.sn'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+// 生成启动脚本打包
+apply plugin: 'java'
+apply plugin: 'application'
+
+jar.manifest.attributes 'Main-Class': mainClassName
+jar.baseName = jarName
+
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {  //远程仓库，根据先后顺序，决定优先级
+	mavenLocal()
+	maven { url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+	mavenCentral()
+}
+
+jar {
+	configurations.runtime.each { println it.path }
+	println "========="
+	configurations.compile.each { println it.path }
+	println "========="
+	from {
+		//添加依懒到打包文件
+		configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+		configurations.runtime.collect { zipTree(it) }
+	}
+
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+//	compileOnly 'org.lombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+//	annotationProcessor 'org.lombok:lombok'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
