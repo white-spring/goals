@@ -1,13 +1,16 @@
-package com.sn.noia;
+package com.white.helix;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * @author whiteSpring
+ */
 @SpringBootApplication
-public class NoiaApplication {
+public class HelixApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(NoiaApplication.class, args);
+		SpringApplication.run(HelixApplication.class, args);
 	}
 
 }

@@ -1,0 +1,20 @@
+server:
+  port: 8010
+#
+spring:
+  application:
+    name: helix
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/helix?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    username: helix
+    password: helix
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
